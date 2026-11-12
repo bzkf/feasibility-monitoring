@@ -11,6 +11,9 @@ on:
     branches:
     - main
     - develop
+permissions:
+  contents:  read
+  packages: write
 
 jobs:
   test-build:
