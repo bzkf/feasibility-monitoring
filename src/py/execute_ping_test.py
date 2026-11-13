@@ -86,7 +86,8 @@ def execute_ping_task(dsf_ping_process_version, dsf_hrp_ident, dsf_base_url, wai
                       dsf_cert_path, dsf_key_path, dsf_ping_download_resource_size, dsf_ping_pong_timeout_duration,
                       dsf_endpoint_id):
     load_config()
-
+    logging.info(dsf_cert_path)
+    logging.info(dsf_key_path)
     dsf_site_ids = json.loads(CONFIG["dsf-site-ids"])
 
     if not dsf_site_ids:
