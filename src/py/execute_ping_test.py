@@ -88,6 +88,12 @@ def execute_ping_task(dsf_ping_process_version, dsf_hrp_ident, dsf_base_url, wai
     load_config()
     logging.info(dsf_cert_path)
     logging.info(dsf_key_path)
+    import os
+
+    for root, dirs, files in os.walk("/opt/reportclient"):
+        logging.info(root)
+        for file in files:
+            logging.info(os.path.join(root, file))
     dsf_site_ids = json.loads(CONFIG["dsf-site-ids"])
 
     if not dsf_site_ids:
