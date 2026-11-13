@@ -29,6 +29,8 @@ DSF_PING_DOWNLOAD_RESOURCE_SIZE=${DSF_PING_DOWNLOAD_RESOURCE_SIZE:-10000000}
 DSF_PING_PONG_TIMEOUT_DURATION=${DSF_PING_PONG_TIMEOUT_DURATION:-"PT30S"}
 DSF_PING_TARGET_ENDPOINT=${DSF_PING_TARGET_ENDPOINT}
 
+echo $DSF_BASE_URL
+
 python src/py/feasibility-monitoring.py --dsf_cert_path $DSF_CERT_PATH --dsf_key_path $DSF_KEY_PATH --backend_base_url "$BACKEND_BASE_URL" --backend_client_id "$BACKEND_CLIENT_ID" \
  --client_secret "$BACKEND_CLIENT_SECRET" --keycloak_token_url "$KEYCLOAK_TOKEN_URL" \
  --confluence_api_base_url "$CONFLUENCE_API_BASE_URL" --conf_user "$CONF_USER" --conf_pw "$CONF_PW"\
