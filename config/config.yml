@@ -3,7 +3,6 @@ feas-page-content-html: |
   <div>
   <strong>Ausgewählte automatische Abfragen des BOARD Machbarkeitsportal</strong><br></br>
   <br></br>
-  <div>
   <strong>Legende</strong>:<br></br>
   <strong>„YES“</strong>: mehr als 20 Datenpunkte<br></br>
   <strong>„no“</strong>: weniger als 20 Datenpunkte<br></br>
