@@ -8,3 +8,5 @@ certs/
 temp/
 __pycache__/
 config/config.yml
+docker/cert/
+.idea/
