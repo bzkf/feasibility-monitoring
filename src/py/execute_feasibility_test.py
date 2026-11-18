@@ -35,14 +35,17 @@ def load_json_file(file_path):
         return json.load(f)
 
 
-def get_results(query_id, access_token, backend_base_url):
+def get_results(query_id, access_token, backend_base_url, ca_cert_path):
     run_query_path = "/query/feasibility"
     header = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
+    verify_ssl = True
+    if not ca_cert_path:
+        verify_ssl = ca_cert_path
     resp = requests.get(
-        f'{backend_base_url}{run_query_path}/{query_id}/detailed-result', headers=header)
+        f'{backend_base_url}{run_query_path}/{query_id}/detailed-result', headers=header, verify=verify_ssl)
     return resp.json()
 
 
@@ -62,7 +65,7 @@ def connect_to_keycloak(backend_client_id, client_secret, keycloak_token_url):
     return access_token
 
 
-def send_test_query_and_get_id(access_token, sq, backend_base_url):
+def send_test_query_and_get_id(access_token, sq, backend_base_url, ca_cert_path):
     header = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
@@ -70,8 +73,12 @@ def send_test_query_and_get_id(access_token, sq, backend_base_url):
 
     run_query_path = "/query/feasibility"
     logging.debug(f'Running query on backend: {backend_base_url}{run_query_path}')
+    verify_ssl = True
+    if not ca_cert_path:
+        verify_ssl = ca_cert_path
+    logging.debug(verify_ssl)
     resp = requests.post(
-        f'{backend_base_url}{run_query_path}', headers=header, json=sq)
+        f'{backend_base_url}{run_query_path}', headers=header, json=sq, verify=verify_ssl)
 
     logging.debug(f'Response from backend run query status code: {resp.status_code}')
     logging.debug(f'Response from backend run query: {resp.text}')
@@ -275,23 +282,23 @@ def send_table_to_conf(table, conf_user, conf_pw, conf_api_base_url, conf_page_i
                        headers=header, json=content_update)
 
 
-def send_query_and_get_results(query, backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas):
+def send_query_and_get_results(query, backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas, ca_cert_path):
     access_token = connect_to_keycloak(backend_client_id, client_secret, keycloak_token_url)
     logging.info(f'Sending query: {query}')
-    query_id = send_test_query_and_get_id(access_token, query, backend_base_url)
+    query_id = send_test_query_and_get_id(access_token, query, backend_base_url, ca_cert_path)
     logging.info(f'Query ID: {query_id}')
     logging.debug(f'Sleep for {wait_result_secs_feas} seconds to wait for results')
     time.sleep(int(wait_result_secs_feas))
     access_token = connect_to_keycloak(backend_client_id, client_secret, keycloak_token_url)
-    return get_results(query_id, access_token, backend_base_url)
+    return get_results(query_id, access_token, backend_base_url, ca_cert_path)
 
 
 def execute_history_query(backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas, conf_user, conf_pw,
-                          confluence_api_base_url, confluence_page_id_hist, send_results_confluence, history_table_len):
+                          confluence_api_base_url, confluence_page_id_hist, send_results_confluence, history_table_len, ca_cert_path):
     load_constants()
     history_report = load_history_report()
     history_query = load_json_file(HISTORY_QUERY_FILE)
-    results = send_query_and_get_results(history_query, backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas)
+    results = send_query_and_get_results(history_query, backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas, ca_cert_path)
     converted_result = convert_results(results)
     update_and_save_history_report(history_report, converted_result)
 
@@ -303,12 +310,12 @@ def execute_history_query(backend_base_url, backend_client_id, client_secret, ke
 
 
 def execute_feas_test_queries(backend_base_url, backend_client_id, client_secret, keycloak_token_url, conf_user, conf_pw,
-                              confluence_api_base_url, confluence_page_id_feas, wait_result_secs_feas, send_results_confluence):
+                              confluence_api_base_url, confluence_page_id_feas, wait_result_secs_feas, send_results_confluence, ca_cert_path):
     load_constants()
     queries = load_json_file(INPUT_QUERIES_FILE)
 
     for query in queries['queries']:
-        results = send_query_and_get_results(query["sq"], backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas)
+        results = send_query_and_get_results(query["sq"], backend_base_url, backend_client_id, client_secret, keycloak_token_url, wait_result_secs_feas, ca_cert_path)
         query['result'] = convert_results(results)
 
     report_table = convert_to_table(queries["queries"], "module")

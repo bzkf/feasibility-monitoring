@@ -4,6 +4,7 @@ DSF_KEY_PATH=$LOCAL_DSF_KEY_PATH
 BACKEND_BASE_URL=${BACKEND_BASE_URL:-"https://localhost/api/v1"} 
 BACKEND_CLIENT_ID=${BACKEND_CLIENT_ID:-"feasibility-gui"} 
 BACKEND_CLIENT_SECRET=${BACKEND_CLIENT_SECRET:-"test"}
+$BACKEND_CERT_PATH=$BACKEND_CERT_PATH
 KEYCLOAK_TOKEN_URL=${KEYCLOAK_TOKEN_URL:-"https://localhost/auth/realms/feasibility/protocol/openid-connect/token"}
 CONFLUENCE_API_BASE_URL=${CONFLUENCE_API_BASE_URL:-"https://myconfluence-rest-api-url"}
 CONF_USER=${CONF_USER:-"username"}
@@ -29,6 +30,7 @@ DSF_PING_DOWNLOAD_RESOURCE_SIZE=${DSF_PING_DOWNLOAD_RESOURCE_SIZE:-10000000}
 DSF_PING_PONG_TIMEOUT_DURATION=${DSF_PING_PONG_TIMEOUT_DURATION:-"PT30S"}
 DSF_PING_TARGET_ENDPOINT=${DSF_PING_TARGET_ENDPOINT}
 
+
 python3 src/py/feasibility-monitoring.py --dsf_cert_path $DSF_CERT_PATH --dsf_key_path $DSF_KEY_PATH --backend_base_url "$BACKEND_BASE_URL" --backend_client_id "$BACKEND_CLIENT_ID" \
  --client_secret "$BACKEND_CLIENT_SECRET" --keycloak_token_url "$KEYCLOAK_TOKEN_URL" \
  --confluence_api_base_url "$CONFLUENCE_API_BASE_URL" --conf_user "$CONF_USER" --conf_pw "$CONF_PW"\
@@ -39,4 +41,4 @@ python3 src/py/feasibility-monitoring.py --dsf_cert_path $DSF_CERT_PATH --dsf_ke
  --execute_collect_activity_definition $EXECUTE_ACTIVITY_DEF_COLLECTION --log_level $LOG_LEVEL  --execute_collect_report_overview $EXECUTE_COLLECT_REPORT_OVERVIEW\
  --dsf_ping_process_version "$DSF_PING_PROCESS_VERSION" --dsf_hrp_ident "$DSF_HRP_IDENT"\
  --dsf_ping_download_resource_size $DSF_PING_DOWNLOAD_RESOURCE_SIZE  --dsf_ping_pong_timeout_duration "$DSF_PING_PONG_TIMEOUT_DURATION"\
- --dsf_ping_target_endpoint "$DSF_PING_TARGET_ENDPOINT"
+ --dsf_ping_target_endpoint "$DSF_PING_TARGET_ENDPOINT" --path_to_custom_cert "$BACKEND_CERT_PATH"

@@ -4,6 +4,7 @@ DSF_KEY_PATH="/opt/reportclient/certs/dsf-key.key"
 BACKEND_BASE_URL=${BACKEND_BASE_URL:-"https://localhost/api/v1"} 
 BACKEND_CLIENT_ID=${BACKEND_CLIENT_ID:-""} 
 BACKEND_CLIENT_SECRET=${BACKEND_CLIENT_SECRET:-""}
+$BACKEND_CERT_PATH=${BACKEND_CERT_PATH:-"/opt/reportclient/certs/backend-ca.crt"}
 KEYCLOAK_TOKEN_URL=${KEYCLOAK_TOKEN_URL:-""}
 CONFLUENCE_API_BASE_URL=${CONFLUENCE_API_BASE_URL:-"https://myconfluence-rest-api-url"}
 CONF_USER=${CONF_USER:-""}
@@ -39,4 +40,4 @@ python src/py/feasibility-monitoring.py --dsf_cert_path $DSF_CERT_PATH --dsf_key
  --execute_ping_test $EXECUTE_DSF_PING_TEST --confluence_page_id_ping $CONFLUENCE_PAGE_ID_PING  --wait_result_secs_ping "$WAIT_RESULT_SECS_PING"\
  --execute_collect_activity_definition $EXECUTE_ACTIVITY_DEF_COLLECTION --log_level "$LOG_LEVEL" --execute_collect_report_overview $EXECUTE_COLLECT_REPORT_OVERVIEW \
  --dsf_ping_process_version "$DSF_PING_PROCESS_VERSION" --dsf_hrp_ident "$DSF_HRP_IDENT" --dsf_ping_download_resource_size $DSF_PING_DOWNLOAD_RESOURCE_SIZE \
- --dsf_ping_pong_timeout_duration "$DSF_PING_PONG_TIMEOUT_DURATION" --dsf_ping_target_endpoint "$DSF_PING_TARGET_ENDPOINT"
+ --dsf_ping_pong_timeout_duration "$DSF_PING_PONG_TIMEOUT_DURATION" --dsf_ping_target_endpoint "$DSF_PING_TARGET_ENDPOINT" --path_to_custom_cert "$BACKEND_CERT_PATH"

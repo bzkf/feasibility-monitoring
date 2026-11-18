@@ -88,6 +88,12 @@ if __name__ == "__main__":
         nargs="?",
         default="14",
     )
+    parser.add_argument(
+        "--path_to_custom_cert",
+        help="path to certificate file, if custom certificate is necessary for backend",
+        nargs="?",
+        default=""
+    )
     parser.add_argument("--execute_feas_test", help="", type=str_to_bool, default="false")
     parser.add_argument("--execute_history_test", help="", type=str_to_bool, default="false")
     parser.add_argument("--execute_ping_test", help="", type=str_to_bool, default="false")
@@ -129,6 +135,7 @@ if __name__ == "__main__":
     b_execute_activity_config_collection = args["execute_collect_activity_definition"]
     b_execute_collect_report_overview = args["execute_collect_report_overview"]
     log_level = args["log_level"]
+    ca_cert_path = args["path_to_custom_cert"]
 
     logging.basicConfig(stream=sys.stdout, level=log_level)
     logging.info(f"Running Feasibility Monitoring with log level {log_level}")
@@ -147,6 +154,7 @@ if __name__ == "__main__":
             confluence_page_id_hist,
             b_send_results_confluence,
             history_table_len,
+            ca_cert_path
         )
         logging.info("Finished executing history test")
 
@@ -163,6 +171,7 @@ if __name__ == "__main__":
             confluence_page_id_feas,
             wait_result_secs_feas,
             b_send_results_confluence,
+            ca_cert_path
         )
         logging.info("Finished executing feasibility test")
 
