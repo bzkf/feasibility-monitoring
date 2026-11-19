@@ -42,7 +42,7 @@ def get_results(query_id, access_token, backend_base_url, ca_cert_path):
         'Content-Type': 'application/json'
     }
     verify_ssl = True
-    if not ca_cert_path:
+    if ca_cert_path:
         verify_ssl = ca_cert_path
     resp = requests.get(
         f'{backend_base_url}{run_query_path}/{query_id}/detailed-result', headers=header, verify=verify_ssl)
@@ -75,7 +75,7 @@ def send_test_query_and_get_id(access_token, sq, backend_base_url, ca_cert_path)
     logging.debug(f'Running query on backend: {backend_base_url}{run_query_path}')
     logging.debug(ca_cert_path)
     verify_ssl = True
-    if not ca_cert_path:
+    if  ca_cert_path:
         verify_ssl = ca_cert_path
     logging.debug(verify_ssl)
     resp = requests.post(
