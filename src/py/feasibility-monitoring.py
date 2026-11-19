@@ -136,6 +136,7 @@ if __name__ == "__main__":
     b_execute_collect_report_overview = args["execute_collect_report_overview"]
     log_level = args["log_level"]
     ca_cert_path = args["path_to_custom_cert"]
+    logging.debug(ca_cert_path)
 
     logging.basicConfig(stream=sys.stdout, level=log_level)
     logging.info(f"Running Feasibility Monitoring with log level {log_level}")

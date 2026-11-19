@@ -73,6 +73,7 @@ def send_test_query_and_get_id(access_token, sq, backend_base_url, ca_cert_path)
 
     run_query_path = "/query/feasibility"
     logging.debug(f'Running query on backend: {backend_base_url}{run_query_path}')
+    logging.debug(ca_cert_path)
     verify_ssl = True
     if not ca_cert_path:
         verify_ssl = ca_cert_path
