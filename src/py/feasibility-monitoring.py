@@ -140,7 +140,11 @@ if __name__ == "__main__":
 
     logging.basicConfig(stream=sys.stdout, level=log_level)
     logging.info(f"Running Feasibility Monitoring with log level {log_level}")
-    logging.debug(ca_cert_path)
+    if ca_cert_path:
+
+        logging.debug(f"Custom path for feasibility backend certificate {ca_cert_path}")
+    else:
+        logging.debug(f"No path to custom certificate for feasibility backend defined")
 
     if b_execute_history_test:
         logging.info("Executing history test")
